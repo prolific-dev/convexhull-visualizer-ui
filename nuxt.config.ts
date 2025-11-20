@@ -21,6 +21,13 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-11-13',
 
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
+  },
+
   eslint: {
     config: {
       stylistic: {
@@ -28,5 +35,5 @@ export default defineNuxtConfig({
         braceStyle: '1tbs'
       }
     }
-  }
+  },
 })
