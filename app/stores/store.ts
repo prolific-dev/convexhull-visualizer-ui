@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { set } from 'zod'
 import { Point2D, Point3D } from '~/types/point'
 import type { ConvexHullFullResponse } from '~~/shared/dto/dto'
 

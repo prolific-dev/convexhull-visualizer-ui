@@ -137,7 +137,12 @@ const tabs: TabsItem[] = [
           <UIcon name="i-lucide-upload" class="size-4 mr-2" />
           Upload
         </UButton>
-        <UButton variant="solid" color="error" size="sm" @click="clear">
+        <UButton
+          variant="solid"
+          color="error"
+          size="sm"
+          @click="clear"
+        >
           <UIcon name="i-lucide-trash-2" class="size-4 mr-2" />
           Clear
         </UButton>
