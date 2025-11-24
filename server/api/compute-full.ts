@@ -29,16 +29,11 @@ export default defineEventHandler(async (event): Promise<ConvexHullFullResponse>
     throw createError({ statusCode: 400, statusMessage: 'Request body must be { input: string[] }' })
   }
 
-  console.log(`Making a request to ${config.apiUrl}/api/v1/convexhull/compute-full`)
-
-  // const res = await fetch(`${config.apiUrl}/api/v1/computeFull`, {
   const res = await fetch(`${config.apiUrl}/api/v1/convexhull/compute-full`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   })
-
-  console.log(`Received response with status ${res.status}`)
 
   if (!res.ok) {
     const text = await res.text().catch(() => res.statusText || 'Backend error')
