@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [22]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Typecheck
+        run: pnpm run typecheck
+
+      - name: Build (sanity check)
+        run: pnpm run build
+        env:
+          NUXT_PUBLIC_SITE_URL: "http://example.com"
+          NUXT_API_URL: "http://api.example.com"
+
+      - name: Trigger Vercel Deployment (only on main)
+        if: success() && github.ref == 'refs/heads/main'
+        run: curl -X POST "${{ secrets.VERCEL_DEPLOY_HOOK_URL }}"

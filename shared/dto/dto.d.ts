@@ -11,7 +11,7 @@ export interface ConvexHullFullResponse {
   base: string[]
   colinear: string[]
   hull: string[]
-  algorimthm: string
+  algorithm: string
   computationTimeMs: number
   timestamp: string
 }

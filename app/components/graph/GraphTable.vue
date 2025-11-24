@@ -1,48 +1,40 @@
 <script setup lang="ts">
 import type { TableColumn } from '@nuxt/ui'
-import { useStore } from '../../stores/store'
-import { h, resolveComponent } from 'vue'
-
-type MyTableData = {
-  xval: number
-  yval: number
-  zval?: number
-  convexType: 'hull' | 'inner' | 'colinear'
-}
+import type { Point2D, Point3D } from '~/types/point'
 
 const store = useStore()
 
-const data2D = ref<MyTableData[]>([
-  { xval: 0, yval: 0, convexType: 'hull' },
-  { xval: 0, yval: 2, convexType: 'hull' },
-  { xval: 2, yval: 0, convexType: 'hull' },
-  { xval: 2, yval: 2, convexType: 'hull' },
-  { xval: 1, yval: 1, convexType: 'inner' },
-  { xval: 0, yval: 1, convexType: 'colinear' }
+const data2D = ref<Point2D[]>([
+  { x: 0, y: 0, convexType: 'Hull' },
+  { x: 0, y: 2, convexType: 'Hull' },
+  { x: 2, y: 0, convexType: 'Hull' },
+  { x: 2, y: 2, convexType: 'Hull' },
+  { x: 1, y: 1, convexType: 'Inner' },
+  { x: 0, y: 1, convexType: 'Colinear' }
 ])
 
-const data3D = ref<MyTableData[]>([
-  { xval: 0, yval: 0, zval: 0, convexType: 'hull' },
-  { xval: 0, yval: 0, zval: 2, convexType: 'hull' },
-  { xval: 0, yval: 2, zval: 0, convexType: 'hull' },
-  { xval: 0, yval: 2, zval: 2, convexType: 'hull' },
-  { xval: 2, yval: 0, zval: 0, convexType: 'hull' },
-  { xval: 2, yval: 0, zval: 2, convexType: 'hull' },
-  { xval: 2, yval: 2, zval: 0, convexType: 'hull' },
-  { xval: 2, yval: 2, zval: 2, convexType: 'hull' },
-  { xval: 1, yval: 1, zval: 1, convexType: 'inner' },
+const data3D = ref<Point3D[]>([
+  { x: 0, y: 0, z: 0, convexType: 'Hull' },
+  { x: 0, y: 0, z: 2, convexType: 'Hull' },
+  { x: 0, y: 2, z: 0, convexType: 'Hull' },
+  { x: 0, y: 2, z: 2, convexType: 'Hull' },
+  { x: 2, y: 0, z: 0, convexType: 'Hull' },
+  { x: 2, y: 0, z: 2, convexType: 'Hull' },
+  { x: 2, y: 2, z: 0, convexType: 'Hull' },
+  { x: 2, y: 2, z: 2, convexType: 'Hull' },
+  { x: 1, y: 1, z: 1, convexType: 'Inner' },
 ])
 
 const UBadge = resolveComponent('UBadge')
 
-const columns2D: TableColumn<MyTableData>[] = [
+const columns2D: TableColumn<Point2D>[] = [
   {
-    accessorKey: 'xval',
+    accessorKey: 'x',
     header: 'X-Value',
     cell: ({ row }) => row.getValue('xval')
   },
   {
-    accessorKey: 'yval',
+    accessorKey: 'y',
     header: 'Y-Value',
     cell: ({ row }) => row.getValue('yval')
   },
@@ -63,21 +55,21 @@ const columns2D: TableColumn<MyTableData>[] = [
   }
 ]
 
-const columns3D: TableColumn<MyTableData>[] = [
+const columns3D: TableColumn<Point3D>[] = [
   {
-    accessorKey: 'xval',
+    accessorKey: 'x',
     header: 'X-Value',
-    cell: ({ row }) => row.getValue('xval')
+    cell: ({ row }) => row.getValue('x')
   },
   {
-    accessorKey: 'yval',
+    accessorKey: 'y',
     header: 'Y-Value',
-    cell: ({ row }) => row.getValue('yval')
+    cell: ({ row }) => row.getValue('y')
   },
   {
-    accessorKey: 'zval',
+    accessorKey: 'z',
     header: 'Z-Value',
-    cell: ({ row }) => row.getValue('zval')
+    cell: ({ row }) => row.getValue('z')
   },
   {
     accessorKey: 'convexType',
@@ -86,7 +78,6 @@ const columns3D: TableColumn<MyTableData>[] = [
       const color = {
         hull: 'success' as const,
         inner: 'error' as const,
-        colinear: 'neutral' as const
       }[row.getValue('convexType') as string]
 
       return h(UBadge, { class: 'capitalize', variant: 'subtle', color }, () =>
@@ -95,12 +86,16 @@ const columns3D: TableColumn<MyTableData>[] = [
     }
   }
 ]
+
+const columns = computed(() => (store.graphDimension.is3D ? columns3D : columns2D)) as ComputedRef<
+  TableColumn<Point2D | Point3D>[]
+>
 </script>
 
 <template>
   <UTable
-    :data="store.graphState.is3D ? data3D : data2D"
-    :columns="store.graphState.is3D ? columns3D : columns2D"
+    :data="store.graphDimension.is3D ? data3D : data2D"
+    :columns="columns"
     class="shrink-0"
     :ui="{
       base: 'table-fixed border-sperate border-spacing-0',

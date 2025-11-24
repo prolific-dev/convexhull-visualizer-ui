@@ -23,7 +23,7 @@ import { useStore } from '../../stores/store'
 
 const store = useStore()
 
-const is3D = computed(() => store.graphState.is3D)
+const is3D = computed(() => store.graphDimension.is3D)
 </script>
 
 <style></style>

@@ -11,7 +11,6 @@ import {
 } from 'chart.js'
 import { Scatter } from 'vue-chartjs'
 import { useStore } from '../../stores/store'
-import { hu } from 'zod/locales'
 
 ChartJS.register(
   LinearScale,
@@ -27,30 +26,26 @@ const appConfig = useAppConfig()
 
 const store = useStore()
 
-const data2d: GraphDataState2D = computed(() => store.graphData2D)
-
 const hull = computed(() => store.graphData2D.hull)
+const colinear = computed(() => store.graphData2D.colinear)
+const inner = computed(() => store.graphData2D.inner)
 
 const hullShape = computed(() => [...hull.value, { x: 0, y: 0 }]) // Closing the hull shape for visualization
 
-const inner = computed(() => store.graphData2D.base)
-
-const colinear = computed(() => store.graphData2D.colinear)
-
 const minX = computed(() => {
-  const xs = hull.value.map(point => point.x)
+  const xs = hull.value.map((point) => point.x)
   return xs.length ? Math.min(...xs) : 0
 })
 const maxX = computed(() => {
-  const xs = hull.value.map(point => point.x)
+  const xs = hull.value.map((point) => point.x)
   return xs.length ? Math.max(...xs) : 0
 })
 const minY = computed(() => {
-  const ys = hull.value.map(point => point.y)
+  const ys = hull.value.map((point) => point.y)
   return ys.length ? Math.min(...ys) : 0
 })
 const maxY = computed(() => {
-  const ys = hull.value.map(point => point.y)
+  const ys = hull.value.map((point) => point.y)
   return ys.length ? Math.max(...ys) : 0
 })
 

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 const store = useStore()
 
-const is3D = computed(() => store.graphState.is3D)
+const is3D = computed(() => store.graphDimension.is3D)
 
 const numHullPoints = computed(() => is3D.value ? store.graphData3D.hull.length : store.graphData2D.hull.length)
-const numInnerPoints = computed(() => is3D.value ? store.graphData3D.base.length : store.graphData2D.base.length)
-const numColinearPoints = computed(() => is3D.value ? store.graphData3D.colinear.length : store.graphData2D.colinear.length)
+const numInnerPoints = computed(() => is3D.value ? store.graphData3D.inner.length : store.graphData2D.inner.length)
+const numColinearPoints = computed(() => is3D.value ? store.graphData3D.colinear?.length : store.graphData2D.colinear?.length)
 
 const totalPoint = computed(() => is3D.value ? store.graphData3D.input.length : store.graphData2D.input.length)
 
@@ -40,7 +40,7 @@ const baseStats = [
     value: numColinearPoints,
     percentage: computed(() => {
       const total = totalPoint.value || 0
-      return total ? Math.round((numColinearPoints.value / total) * 100) : 0
+      return total ? Math.round(((numColinearPoints.value ? numColinearPoints.value : 0) / total) * 100) : 0
     }),
   }
 ]

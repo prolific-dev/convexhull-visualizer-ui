@@ -4,6 +4,7 @@
 
 <script lang="ts" setup>
 import Plotly from 'plotly.js-dist-min'
+import type { Point3D } from '~/types/point'
 
 const colorMode = useColorMode()
 const appConfig = useAppConfig()
@@ -41,10 +42,12 @@ const layout = {
   plot_bgcolor: 'rgba(50,23,120,20)',
 }
 
+const input = computed(() => store.graphData3D.input)
+
 const trace1 = {
-  x: store.graphData3D.input.map((point) => point.x),
-  y: store.graphData3D.input.map((point) => point.y),
-  z: store.graphData3D.input.map((point) => point.z),
+  x: input.value.map((p: Point3D) => p.x),
+  y: input.value.map((p: Point3D) => p.y),
+  z: input.value.map((p: Point3D) => p.z),
   mode: 'markers',
   type: 'scatter3d',
   connectgaps: true,
@@ -84,7 +87,14 @@ onMounted(() => {
   }
 })
 
-watch([colorMode.value, () => appConfig.ui.colors.primary], () => {
+watch([colorMode, () => appConfig.ui.colors.primary], () => {
+  restylePlot()
+})
+
+watch(input, (newInput) => {
+  trace1.x = newInput.map((p: Point3D) => p.x)
+  trace1.y = newInput.map((p: Point3D) => p.y)
+  trace1.z = newInput.map((p: Point3D) => p.z)
   restylePlot()
 })
 </script>

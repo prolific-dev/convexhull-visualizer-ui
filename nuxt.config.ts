@@ -4,7 +4,8 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/ui',
     '@vueuse/nuxt',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
+    'pinia-plugin-persistedstate/nuxt',
   ],
 
   devtools: {
@@ -12,6 +13,11 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
+
+  runtimeConfig: {
+    siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+    apiUrl: process.env.NUXT_API_URL || 'http://prolific-dev.com:8080',
+  },
 
   routeRules: {
     '/api/**': {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Analytics } from '@vercel/analytics/nuxt'
+
 const colorMode = useColorMode()
 
 const color = computed(() => (colorMode.value === 'dark' ? '#1b1718' : 'white'))
@@ -28,6 +30,7 @@ useSeoMeta({
 </script>
 
 <template>
+  <Analytics />
   <UApp>
     <NuxtLoadingIndicator />
 
