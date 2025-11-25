@@ -43,18 +43,38 @@ const layout = {
 }
 
 const input = computed(() => store.graphData3D.input)
+const hull = computed(() => store.graphData3D.hull)
+const inner = computed(() => store.graphData3D.inner)
 
 const trace1 = {
-  x: input.value.map((p: Point3D) => p.x),
-  y: input.value.map((p: Point3D) => p.y),
-  z: input.value.map((p: Point3D) => p.z),
+  x: hull.value.map((p: Point3D) => p.x),
+  y: hull.value.map((p: Point3D) => p.y),
+  z: hull.value.map((p: Point3D) => p.z),
   mode: 'markers',
   type: 'scatter3d',
   connectgaps: true,
   alphahull: 7,
   marker: {
-    color: appConfig.ui.colors.primary,
-    size: 12,
+    color: appConfig.ui.colors.primaryHull,
+    size: 8,
+    line: {
+      color: colorMode.value === 'dark' ? 'white' : 'neutral',
+      width: 2,
+    },
+  },
+}
+
+const trace2 = {
+  x: inner.value.map((p: Point3D) => p.x),
+  y: inner.value.map((p: Point3D) => p.y),
+  z: inner.value.map((p: Point3D) => p.z),
+  mode: 'markers',
+  type: 'scatter3d',
+  connectgaps: true,
+  alphahull: 7,
+  marker: {
+    color: appConfig.ui.colors.primaryInner,
+    size: 8,
     line: {
       color: colorMode.value === 'dark' ? 'white' : 'neutral',
       width: 2,
@@ -65,7 +85,7 @@ const trace1 = {
 function restylePlot() {
   if (plotlyChart.value) {
     Plotly.restyle(plotlyChart.value, {
-      'marker.color': appConfig.ui.colors.primary,
+      // 'marker.color': appConfig.ui.colors.primary,
       'line.color': colorMode.value === 'dark' ? 'white' : 'black',
     })
 
@@ -82,7 +102,7 @@ function restylePlot() {
 
 onMounted(() => {
   if (plotlyChart.value) {
-    Plotly.newPlot(plotlyChart.value, [trace1], layout, config)
+    Plotly.newPlot(plotlyChart.value, [trace1, trace2], layout, config)
     restylePlot()
   }
 })

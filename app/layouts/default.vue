@@ -16,14 +16,14 @@ const links = [
         open.value = false
       }
     },
-    // {
-    //   label: 'Chart',
-    //   icon: 'i-lucide-bar-chart-2',
-    //   to: '/graph',
-    //   onSelect: () => {
-    //     open.value = false
-    //   }
-    // },
+    {
+      label: 'Chart',
+      icon: 'i-lucide-bar-chart-2',
+      to: '/chart',
+      onSelect: () => {
+        open.value = false
+      }
+    },
     {
       label: 'API',
       icon: 'i-lucide-code',
@@ -152,18 +152,18 @@ onMounted(async () => {
       v-model:open="open"
       collapsible
       resizable
-      class="bg-elevated/25"
+      class="bg-elevated/25 gap-6"
       :ui="{ footer: 'lg:border-t lg:border-default' }"
     >
       <template #header="{ collapsed }">
-        <UContainer class="py-4 text-lg font-semibold">
-          <div :class="collapsed ? 'flex flex-col items-center' : 'flex items-center gap-3'">
+        <UContainer class="pt-8 text-lg font-semibold min-h-[120px]">
+          <div :class="collapsed ? 'flex flex-col items-center' : 'flex flex-col items-center whitespace-nowrap'">
             <img
               src="../assets/img/convex_hull_new-removebg-preview.png"
               alt="Convex Hull Visualizer Logo"
               class="w-14 h-14"
             >
-            <p v-show="!collapsed" class="font-semibold text-sm">Convex Hull Visualizer</p>
+            <p v-show="!collapsed" class="font-semibold text-sm">Convex Hull Visualizer v0.0.1 Alpha</p>
           </div>
         </UContainer>
       </template>

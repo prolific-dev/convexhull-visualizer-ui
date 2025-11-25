@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type { NavigationMenuItem, TabsItem } from '@nuxt/ui'
 
-const xvalue = ref(0)
-const yvalue = ref(0)
-const zvalue = ref(0)
+const xvalue = ref<number>(0)
+const yvalue = ref<number>(0)
+const zvalue = ref<number>(0)
 
 const store = useStore()
 
@@ -33,17 +33,22 @@ function clear() {
   }
 }
 
-// activeTab mirrors store.graphDimension.is3D: '3D' when true, '2D' when false
-const activeTab = ref(store.graphDimension.is3D ? '3D' : '2D')
+const tabs: TabsItem[] = [
+  {
+    label: '2D',
+    value: '2D',
+  },
+  {
+    label: '3D',
+    value: '3D'
+  }
+]
 
-// Keep store in sync when tab changes
-watch(activeTab, (v) => {
-  store.graphDimension.is3D = v === '3D'
-})
-
-// Keep tab UI in sync when store changes externally
-watch(() => store.graphDimension.is3D, (val) => {
-  activeTab.value = val ? '3D' : '2D'
+const activeTab = computed({
+  get: () => store.graphDimension.is3D ? '3D' : '2D',
+  set: () => {
+    store.toggleDimension()
+  }
 })
 
 const items: NavigationMenuItem[] = [
@@ -57,100 +62,98 @@ const items: NavigationMenuItem[] = [
     {
       label: 'Help & Feedback',
       icon: 'i-lucide-help-circle',
-      to: 'https://github.com/prolific-dev/convexhull-visualizer-ui',
+      to: 'https://github.com/prolific-dev/convexhull-visualizer-ui/issues',
       target: '_blank'
     }
   ]
 ]
-
-const tabs: TabsItem[] = [
-  {
-    label: '2D',
-    value: '2D',
-  },
-  {
-    label: '3D',
-    value: '3D'
-  }
-]
 </script>
 
 <template>
-  <UDashboardToolbar class="shrink-0 flex items-center justify-between border-p border-default px-4 sm:px-6 gap-1.5 overflow-x-auto min-h-[49px]">
+  <UDashboardToolbar class="grid grid-flow-row 2xl:flex justify-center w-full">
     <template #left>
-      <UContainer class="flex items-center space-x-2">
-        <UTabs
-          v-model="activeTab"
-          :items="tabs"
-          variant="pill"
-          size="sm"
-          class="w-40"
-          :content="false"
-        />
+      <UContainer class="grid grid-flow-row xl:grid-flow-col pt-2 xl:pt-0 gap-3 xl:gap-2 justify-center w-full">
+        <UContainer class="flex items-center justify-center">
+          <UTabs
+            v-model="activeTab"
+            :items="tabs"
+            variant="pill"
+            size="sm"
+            class="w-40"
+            :content="false"
+          />
+        </UContainer>
         <!-- InputNumber label for x value -->
-        <span class="text-sm font-medium text-gray-700 self-center ml-4 mr-1">X:</span>
-        <UInputNumber
-          v-model="xvalue"
-          orientation="vertical"
-          size="sm"
-          placeholder="X"
-        />
-        <!-- InputNumber label for y value -->
-        <span class="text-sm font-medium text-gray-700 self-center ml-4 mr-1">Y:</span>
-        <UInputNumber
-          v-model="yvalue"
-          orientation="vertical"
-          size="sm"
-          placeholder="Y"
-        />
-        <!-- InputNumber label for z value -->
-        <span v-if="is3D" class="text-sm font-medium text-gray-700 self-center ml-4 mr-1">Z:</span>
-        <UInputNumber
-          v-if="is3D"
-          v-model="zvalue"
-          orientation="vertical"
-          size="sm"
-          placeholder="Z"
-        />
-        <UButton
-          variant="solid"
-          color="primary"
-          size="sm"
-          class="ml-4"
-          type="button"
-          @click="addPoint"
-        >
-          <UIcon name="i-lucide-plus" class="size-4 mr-2" />
-          Add
-        </UButton>
-        <UButton
-          variant="solid"
-          color="primary"
-          size="sm"
-          type="button"
-          @click="removePoint"
-        >
-          <UIcon name="i-lucide-minus" class="size-4 mr-2" />
-          Remove
-        </UButton>
-        <UButton variant="solid" color="warning" size="sm">
-          <UIcon name="i-lucide-upload" class="size-4 mr-2" />
-          Upload
-        </UButton>
-        <UButton
-          variant="solid"
-          color="error"
-          size="sm"
-          @click="clear"
-        >
-          <UIcon name="i-lucide-trash-2" class="size-4 mr-2" />
-          Clear
-        </UButton>
+        <UContainer class="flex items-center p-0 gap-2 min-w-[300px]">
+          <span class="text-sm font-medium text-gray-700 self-center mr-1">X:</span>
+          <UInputNumber
+            v-model="xvalue"
+            orientation="vertical"
+            size="sm"
+            placeholder="X"
+          />
+          <!-- InputNumber label for y value -->
+          <span class="text-sm font-medium text-gray-700 self-center mr-1">Y:</span>
+          <UInputNumber
+            v-model="yvalue"
+            orientation="vertical"
+            size="sm"
+            placeholder="Y"
+          />
+          <!-- InputNumber label for z value -->
+          <span v-if="is3D" class="text-sm font-medium text-gray-700 self-center mr-1">Z:</span>
+          <UInputNumber
+            v-if="is3D"
+            v-model="zvalue"
+            orientation="vertical"
+            size="sm"
+            placeholder="Z"
+          />
+        </UContainer>
+        <UContainer class="grid grid-cols-2 gap-2 md:flex md:flex-row md:justify-center md:gap-1 py-4">
+          <UButton
+            variant="solid"
+            color="primary"
+            size="sm"
+            type="button"
+            @click="addPoint"
+          >
+            <UIcon name="i-lucide-plus" class="size-4 mr-2" />
+            Add
+          </UButton>
+          <UButton
+            variant="solid"
+            color="primary"
+            size="sm"
+            type="button"
+            @click="removePoint"
+          >
+            <UIcon name="i-lucide-minus" class="size-4 mr-2" />
+            Remove
+          </UButton>
+          <UButton variant="solid" color="warning" size="sm">
+            <UIcon name="i-lucide-upload" class="size-4 mr-2" />
+            Upload
+          </UButton>
+          <UButton
+            variant="solid"
+            color="error"
+            size="sm"
+            @click="clear"
+          >
+            <UIcon name="i-lucide-trash-2" class="size-4 mr-2" />
+            Clear
+          </UButton>
+        </UContainer>
       </UContainer>
     </template>
 
     <template #right>
-      <UNavigationMenu :items="items" highlight class="flex-1" />
+      <UNavigationMenu
+        :items="items"
+        highlight
+        class="flex flex-auto justify-center"
+      />
     </template>
   </UDashboardToolbar>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div>Settings Billing Page</div>
+  <div>The Settings Billing Page is under construction and coming soon.</div>
 </template>
 
 <script lang="ts" setup>

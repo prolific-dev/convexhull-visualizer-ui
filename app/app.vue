@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Analytics } from '@vercel/analytics/nuxt'
+import { SpeedInsights } from '@vercel/speed-insights/vue'
 
 const colorMode = useColorMode()
 
@@ -17,7 +18,7 @@ useHead({
   }
 })
 
-const title = 'Convex Hull Visualizer v 0.0.1 Beta'
+const title = 'Convex Hull Visualizer v0.0.1 Alpha'
 const description
   = 'An interactive tool to visualize and understand convex hull algorithms in 2D and 3D spaces.'
 
@@ -31,6 +32,7 @@ useSeoMeta({
 
 <template>
   <Analytics />
+  <SpeedInsights />
   <UApp>
     <NuxtLoadingIndicator />
 

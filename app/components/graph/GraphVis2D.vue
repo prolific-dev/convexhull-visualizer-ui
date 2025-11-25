@@ -49,12 +49,14 @@ const maxY = computed(() => {
   return ys.length ? Math.max(...ys) : 0
 })
 
+console.log('appConfig.ui.colors.primary: ', appConfig.ui.colors.primary)
+
 const chartData = computed(() => ({
   datasets: [
     {
       label: 'Convex Hull Points',
       data: hull.value,
-      backgroundColor: appConfig.ui.colors.primary,
+      backgroundColor: appConfig.ui.colors.primaryHull,
       hoverOffset: 4,
       pointRadius: 8
     },
@@ -67,25 +69,29 @@ const chartData = computed(() => ({
       hoverOffset: 0,
       showLine: true,
       fill: 'shape',
+      backgroundColor: appConfig.ui.colors.primaryWithOpacity,
+      legend: {
+        display: false
+      }
     },
     {
       label: 'Inner Points',
       data: inner.value,
-      backgroundColor: appConfig.ui.colors.primary,
+      backgroundColor: appConfig.ui.colors.primaryInner,
       hoverOffset: 4,
       pointRadius: 8
     },
     {
       label: 'Colinear Points',
       data: colinear.value,
-      backgroundColor: appConfig.ui.colors.primary,
+      backgroundColor: appConfig.ui.colors.primaryColinear,
       hoverOffset: 4,
       pointRadius: 8
     }
   ]
 }))
 
-const chartOptions = ref({
+const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: true,
   scales: {
@@ -102,7 +108,7 @@ const chartOptions = ref({
       max: maxY.value + 1
     },
   },
-})
+}))
 </script>
 
 <template>

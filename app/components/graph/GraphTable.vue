@@ -4,26 +4,17 @@ import type { Point2D, Point3D } from '~/types/point'
 
 const store = useStore()
 
-const data2D = ref<Point2D[]>([
-  { x: 0, y: 0, convexType: 'Hull' },
-  { x: 0, y: 2, convexType: 'Hull' },
-  { x: 2, y: 0, convexType: 'Hull' },
-  { x: 2, y: 2, convexType: 'Hull' },
-  { x: 1, y: 1, convexType: 'Inner' },
-  { x: 0, y: 1, convexType: 'Colinear' }
-])
-
-const data3D = ref<Point3D[]>([
-  { x: 0, y: 0, z: 0, convexType: 'Hull' },
-  { x: 0, y: 0, z: 2, convexType: 'Hull' },
-  { x: 0, y: 2, z: 0, convexType: 'Hull' },
-  { x: 0, y: 2, z: 2, convexType: 'Hull' },
-  { x: 2, y: 0, z: 0, convexType: 'Hull' },
-  { x: 2, y: 0, z: 2, convexType: 'Hull' },
-  { x: 2, y: 2, z: 0, convexType: 'Hull' },
-  { x: 2, y: 2, z: 2, convexType: 'Hull' },
-  { x: 1, y: 1, z: 1, convexType: 'Inner' },
-])
+const data2D = computed(() => {
+  const hull = store.graphData2D.hull.map((p) => ({ ...p, convexType: 'Hull' }))
+  const inner = store.graphData2D.inner.map((p) => ({ ...p, convexType: 'Inner' }))
+  const colinear = store.graphData2D.colinear?.map((p) => ({ ...p, convexType: 'Colinear' })) ?? []
+  return [...hull, ...inner, ...colinear]
+})
+const data3D = computed(() => {
+  const hull = store.graphData3D.hull.map((p) => ({ ...p, convexType: 'Hull' }))
+  const inner = store.graphData3D.inner.map((p) => ({ ...p, convexType: 'Inner' }))
+  return [...hull, ...inner]
+})
 
 const UBadge = resolveComponent('UBadge')
 
@@ -31,12 +22,12 @@ const columns2D: TableColumn<Point2D>[] = [
   {
     accessorKey: 'x',
     header: 'X-Value',
-    cell: ({ row }) => row.getValue('xval')
+    cell: ({ row }) => row.getValue('x')
   },
   {
     accessorKey: 'y',
     header: 'Y-Value',
-    cell: ({ row }) => row.getValue('yval')
+    cell: ({ row }) => row.getValue('y')
   },
   {
     accessorKey: 'convexType',
