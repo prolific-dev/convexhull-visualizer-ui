@@ -202,10 +202,9 @@ onMounted(async () => {
     </UDashboardSidebar>
 
     <UDashboardSearch :groups="groups" />
-
-    <slot></slot>
-
+    <NuxtPage />
     <!--
+      <slot></slot>
       <NotificationsSlideover />
     -->
   </UDashboardGroup>
