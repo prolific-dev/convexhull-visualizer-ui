@@ -1,7 +1,9 @@
-ignoredBuiltDependencies:
+onlyBuiltDependencies:
   - '@parcel/watcher'
-  - '@tailwindcss/oxide'
+  - '@vercel/speed-insights'
+  - better-sqlite3
   - esbuild
   - maplibre-gl
+  - sqlite3
   - unrs-resolver
   - vue-demi
