@@ -1,262 +1,94 @@
 ---
 seo:
-  title: Nuxt Docs Template
-  description: Create stunning, fast and SEO-optimized documentation sites with Nuxt UI.
+  title: Convex Hull Visualizer
+  description: Interactive 2D/3D convex hull visualization with tunable algorithms, sample data, and export tools.
 ---
 
-::u-page-hero{class="dark:bg-gradient-to-b from-neutral-900 to-neutral-950"}
----
-orientation: horizontal
----
-#top
-:hero-background
-
+::u-page-hero{class="dark:bg-gradient-to-b from-neutral-950 via-neutral-900 to-neutral-950"}
 #title
-Ship Beautiful [Documentation]{.text-primary}.
+Convex Hulls, Crystal Clear.
 
 #description
-Build professional documentation with Nuxt UI's powerful components, enhanced typography, and seamless Nuxt Content integration. The same system trusted by the entire [Nuxt ecosystem](https://nuxt.com).
+Design-grade visuals for geometry demos, courseware, and validations. Switch between 2D and 3D, tune algorithms live, and export results in seconds.
 
 #links
   :::u-button
   ---
   to: /chart
   size: xl
-  trailing-icon: i-lucide-arrow-right
+  trailing-icon: i-lucide-arrow-up-right
   ---
-  Get started
+  Launch visualizer
   :::
 
   :::u-button
   ---
-  icon: i-simple-icons-github
+  icon: i-lucide-book-open
   color: neutral
   variant: outline
   size: xl
-  to: https://github.com/prolific-dev/convexhull-visualizer-ui
-  target: _blank
+  to: /api-docs
   ---
-  Use this template
+  View API docs
   :::
+::
+
+::u-page-section
+#title
+Built for visual impact and clarity
+
+#description
+From classroom walkthroughs to engineering reviews, every control is designed to surface the hull quickly and make the story obvious.
 
 #default
-  :::prose-pre
-  ---
-  code: |
-    export default defineNuxtConfig({
-      modules: [
-        '@nuxt/ui',
-        '@nuxt/content',
-        'nuxt-og-image',
-        'nuxt-llms'
-      ],
-
-      css: ['~/assets/css/main.css']
-    })
-  filename: nuxt.config.ts
-  ---
-
-  ```ts [nuxt.config.ts]
-  export default defineNuxtConfig({
-    modules: [
-      '@nuxt/ui',
-      '@nuxt/content',
-      'nuxt-og-image',
-      'nuxt-llms'
-    ],
-
-    css: ['~/assets/css/main.css']
-  })
-  ```
+  :::u-page-grid
+  #items
+  - title: Cinematic hero view
+    description: Glide through scenes with smooth orbit, pan, and zoom in both 2D and 3D.
+  - title: Algorithm agility
+    description: Swap Quickhull or Graham Scan, adjust iterations, and see each intermediate step with the live stepper.
+  - title: Data-ready
+    description: Start with curated clusters from /api/data2d and /api/data3d or drop in your own points and weights.
+  - title: Export on cue
+    description: Capture the canvas as JSON or a screenshot and keep the exact config for reproducible demos.
   :::
 ::
 
-::u-page-section{class="dark:bg-neutral-950"}
+::u-page-section
 #title
-Powered by Nuxt UI components
+How it flows
 
-#links
-  :::u-button
-  ---
-  color: neutral
-  size: lg
-  target: _blank
-  to: https://ui.nuxt.com/docs/getting-started/installation/nuxt
-  trailingIcon: i-lucide-arrow-right
-  variant: subtle
-  ---
-  Explore Nuxt UI
-  :::
-
-#features
-  :::u-page-feature
-  ---
-  icon: i-lucide-palette
-  ---
-  #title
-  100+ UI Components
-
-  #description
-  Access the complete Nuxt UI component library. From badges to modals, everything styled and accessible out of the box.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-type
-  ---
-  #title
-  Beautiful Typography
-
-  #description
-  Pre-styled prose components with perfect visual harmony. No need for @tailwindcss/typography - get precise control over every element.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-layers
-  ---
-  #title
-  Rich Prose Components
-
-  #description
-  Accordions, cards, callouts, tabs, steps, code blocks, and more - all provided by Nuxt UI for interactive documentation.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-search
-  ---
-  #title
-  Built-in Search
-
-  #description
-  Full-text search with ContentSearch component. No need for Algolia - instant, relevant results with keyboard shortcuts (⌘K).
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-navigation
-  ---
-  #title
-  Smart Navigation
-
-  #description
-  Auto-generated navigation with ContentNavigation and ContentToc components. Sticky table of contents and prev/next links.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-moon
-  ---
-  #title
-  Dark Mode Ready
-
-  #description
-  Automatic theme switching with smooth transitions. Respects system preferences and remembers user choice.
-  :::
+#default
+  1. **Load points** – Open `/chart`, pick a sample dataset, paste your own, or hit the API for programmatic runs.
+  2. **Tune the run** – In `/settings`, choose the algorithm, limit iterations, toggle debug overlays, and style the hull.
+  3. **Inspect step-by-step** – Use the stepper to watch each facet form, orbit the scene, and verify edges before exporting.
+  4. **Share the outcome** – Save JSON, snapshots, or deep links with the same parameters to keep collaborators aligned.
 ::
 
-::u-page-section{class="dark:bg-neutral-950"}
+::u-page-section
 #title
-Enhanced with Nuxt Content
+Where to click next
 
-#links
-  :::u-button
-  ---
-  color: neutral
-  size: lg
-  target: _blank
-  to: https://content.nuxt.com/docs/getting-started/installation
-  trailingIcon: i-lucide-arrow-right
-  variant: subtle
-  ---
-  Explore Nuxt Content
-  :::
-
-#features
-  :::u-page-feature
-  ---
-  icon: i-simple-icons-markdown
-  ---
-  #title
-  MDC Enhanced Markdown
-
-  #description
-  Write in Markdown while embedding Vue components. Seamlessly integrate interactive elements in your content.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-file-text
-  ---
-  #title
-  File-based Routing
-
-  #description
-  Organize content in folders and files. Your documentation structure automatically becomes your navigation.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-code
-  ---
-  #title
-  Syntax Highlighting
-
-  #description
-  Beautiful code blocks with language detection, line numbers, and copy buttons. Support for 100+ languages.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-database
-  ---
-  #title
-  Content Database
-
-  #description
-  Query your content with a MongoDB-like API. Filter, sort, and search through your documentation programmatically.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-file-code
-  ---
-  #title
-  Frontmatter Support
-
-  #description
-  Add metadata to your content files. Define SEO tags, navigation properties, and custom fields.
-  :::
-
-  :::u-page-feature
-  ---
-  icon: i-lucide-git-branch
-  ---
-  #title
-  Version Control
-
-  #description
-  Content lives in your repository. Branch, review, and deploy documentation alongside your code.
+#default
+  :::u-accordion
+  - label: /chart
+    content: Main canvas with navigation, stepper, hull controls, and sampling presets.
+  - label: /settings
+    content: Full control center for algorithm choice, point styling, overlays, and performance tuning.
+  - label: /api-docs
+    content: Reference for `compute`, `compute-full`, `data2d`, and `data3d`, including payload shapes.
+  - label: /about
+    content: Implementation notes, libraries, and licensing context.
   :::
 ::
 
-::u-page-section{class="dark:bg-gradient-to-b from-neutral-950 to-neutral-900"}
-  :::u-page-c-t-a
-  ---
-  links:
-    - label: Start building
-      to: '/chart'
-      trailingIcon: i-lucide-arrow-right
-    - label: View on GitHub
-      to: 'https://github.com/nuxt-ui-templates/docs'
-      target: _blank
-      variant: subtle
-      icon: i-simple-icons-github
-  title: Ready to build an amazing documentation?
-  description: Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today.
-  class: dark:bg-neutral-950
-  ---
+::u-page-section
+#title
+API quick reference
 
-  :::
-::
+#default
+  ```txt
+  GET  /api/data2d        # Sample points in 2D
+  GET  /api/data3d        # Sample points in 3D
+  POST /api/compute       # Computes hull with metadata
+  POST /api/compute-full  # Includes intermediate steps

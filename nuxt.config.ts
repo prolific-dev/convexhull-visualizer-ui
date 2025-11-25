@@ -22,7 +22,7 @@ export default defineNuxtConfig({
           searchDepth: 1
         }
       }
-    }
+    },
   },
 
   runtimeConfig: {
