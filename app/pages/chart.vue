@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({
+  title: 'Chart Page',
+  layout: 'default'
+})
+
 const { isNotificationsSlideoverOpen } = useDashboard()
 </script>
 

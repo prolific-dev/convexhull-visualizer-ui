@@ -1,8 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 definePageMeta({
   title: 'Home',
-  layout: 'landing'
+  layout: 'default'
 })
+
+const { isNotificationsSlideoverOpen } = useDashboard()
 
 const links = ref([
   {
@@ -132,86 +134,85 @@ const reasons = ref([
     image: '/img/landing4.png'
   }
 ])
-
-const cta = ref({
-  title: 'Ready to explore convex hulls in action?',
-  description: 'Unlock an interactive, algorithm-driven view of computational geometry. Experiment, compare, and learn—all in one visual playground.',
-  links: [
-    {
-      label: 'Launch Visualizer',
-      to: '/chart',
-      icon: 'i-lucide-square-play'
-    },
-    {
-      label: 'Explore API Docs',
-      to: '/api-docs',
-      icon: 'i-lucide-book-open'
-    }
-  ]
-})
 </script>
 
 <template>
-  <!-- HERO -->
-  <UPageHero
-    title="Welcome to the Convex Hull Visualizer"
-    description="An interactive tool to visualize and understand convex hull algorithms."
-    headline="New Release v0.0.1 Alpha"
-    orientation="horizontal"
-    :links="links"
-  >
-    <template #top>
-      <HeroBackground />
+  <UDashboardPanel id="home">
+    <template #header>
+      <UDashboardNavbar title="Home" :ui="{ right: 'gap-3' }">
+        <template #leading>
+          <UDashboardSidebarCollapse />
+        </template>
+
+        <template #right>
+          <UTooltip text="Notifications" :shortcuts="['N']">
+            <UButton
+              color="neutral"
+              variant="ghost"
+              square
+              @click="isNotificationsSlideoverOpen = true"
+            >
+              <UChip color="error" inset>
+                <UIcon name="i-lucide-bell" class="size-5 shrink-0" />
+              </UChip>
+            </UButton>
+          </UTooltip>
+        </template>
+      </UDashboardNavbar>
     </template>
-    <img
-      src="/img/landing1.png"
-      alt="App screenshot"
-      class="rounded-lg shadow-2xl ring ring-default"
-    >
-  </UPageHero>
-  <!-- REASONS -->
-  <UPageSection
-    v-for="(reason, index) in reasons"
-    :key="index"
-    :title="reason.title"
-    :description="reason.description"
-    :orientation="reason.orientation"
-    :reverse="reason.reverse"
-    :features="reason.features"
-  >
-    <!--
-      <ImagePlaceholder />
-    -->
-    <img
-      :src="reason.image"
-      :alt="`Illustration for ${reason.title}`"
-      class="rounded-lg shadow-2xl ring ring-default"
-    >
-  </UPageSection>
 
-  <!-- CARDS -->
-  <UPageSection
-    title="Built for visual impact and clarity"
-    description="From classroom walkthroughs to engineering reviews, every control is designed to surface the hull quickly and make the story obvious."
-  >
-    <UPageGrid>
-      <UPageCard
-        v-for="(card, index) in cards"
+    <template #body>
+      <!-- HERO -->
+      <UPageHero
+        title="Welcome to the Convex Hull Visualizer"
+        description="An interactive tool to visualize and understand convex hull algorithms."
+        headline="New Release v0.0.1 Alpha"
+        orientation="horizontal"
+        :links="links"
+      >
+        <template #top>
+          <HeroBackground />
+        </template>
+        <img
+          src="/img/landing1.png"
+          alt="App screenshot"
+          class="rounded-lg shadow-2xl ring ring-default"
+        >
+      </UPageHero>
+      <!-- REASONS -->
+      <UPageSection
+        v-for="(reason, index) in reasons"
         :key="index"
-        v-bind="card"
-        spotlight
-      />
-    </UPageGrid>
-  </UPageSection>
+        :title="reason.title"
+        :description="reason.description"
+        :orientation="reason.orientation"
+        :reverse="reason.reverse"
+        :features="reason.features"
+      >
+        <!--
+          <ImagePlaceholder />
+        -->
+        <img
+          :src="reason.image"
+          :alt="`Illustration for ${reason.title}`"
+          class="rounded-lg shadow-2xl ring ring-default"
+        >
+      </UPageSection>
 
-  <USeparator />
-
-  <!-- CTA -->
-  <UPageCTA
-    :title="cta.title"
-    :description="cta.description"
-    :links="cta.links"
-  >
-    <LazyStarsBg />
-  </UPageCTA>
+      <!-- CARDS -->
+      <UPageSection
+        title="Built for visual impact and clarity"
+        description="From classroom walkthroughs to engineering reviews, every control is designed to surface the hull quickly and make the story obvious."
+      >
+        <UPageGrid>
+          <UPageCard
+            v-for="(card, index) in cards"
+            :key="index"
+            v-bind="card"
+            spotlight
+          />
+        </UPageGrid>
+      </UPageSection>
+    </template>
+  </UDashboardPanel>
 </template>

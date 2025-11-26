@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+definePageMeta({
+  title: 'API Documentation',
+  layout: 'default'
+})
+</script>
+
 <template>
   <UPage class="api-docs p-4 w-full max-w-3xl mx-auto">
     <h1>ConvexHull Visualizer API — Quick Start</h1>
@@ -83,10 +90,6 @@
     <p>If you'd like, I can add example fetch/axios snippets, or wire this page into the site navigation.</p>
   </UPage>
 </template>
-
-<script lang="ts" setup>
-
-</script>
 
 <style>
 .api-docs{min-height:100vh;overflow:auto;box-sizing:border-box;padding-bottom:48px;-ms-overflow-style:none;scrollbar-width:none}

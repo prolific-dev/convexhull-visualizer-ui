@@ -11,7 +11,7 @@ const links = [
     {
       label: 'Home',
       icon: 'i-lucide-house',
-      to: '/',
+      to: '/home',
       onSelect: () => {
         open.value = false
       }
@@ -159,7 +159,7 @@ onMounted(async () => {
         <UContainer class="pt-8 text-lg font-semibold min-h-[120px]">
           <div :class="collapsed ? 'flex flex-col items-center' : 'flex flex-col items-center whitespace-nowrap'">
             <img
-              src="../assets/img/convex_hull_new-removebg-preview.png"
+              src="/img/convex_hull_transparent_bg.png"
               alt="Convex Hull Visualizer Logo"
               class="w-14 h-14"
             >
@@ -167,11 +167,6 @@ onMounted(async () => {
           </div>
         </UContainer>
       </template>
-      <!--
-      <template #header="{ collapsed }">
-          <TeamsMenu :collapsed="collapsed" />
-        </template>
-      -->
 
       <template #default="{ collapsed }">
         <UDashboardSearchButton
@@ -200,11 +195,9 @@ onMounted(async () => {
         <UserMenu :collapsed="collapsed" />
       </template>
     </UDashboardSidebar>
-
     <UDashboardSearch :groups="groups" />
-    <NuxtPage />
+    <slot></slot>
     <!--
-      <slot></slot>
       <NotificationsSlideover />
     -->
   </UDashboardGroup>

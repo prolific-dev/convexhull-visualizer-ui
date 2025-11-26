@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
 
+definePageMeta({
+  title: 'Settings',
+  layout: 'default'
+})
+
 const links = [
   [
     {

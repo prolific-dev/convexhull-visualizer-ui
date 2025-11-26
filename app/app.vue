@@ -35,7 +35,6 @@ useSeoMeta({
   <SpeedInsights />
   <UApp>
     <NuxtLoadingIndicator />
-
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

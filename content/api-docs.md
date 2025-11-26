@@ -92,3 +92,4 @@ API quick reference
   GET  /api/data3d        # Sample points in 3D
   POST /api/compute       # Computes hull with metadata
   POST /api/compute-full  # Includes intermediate steps
+  ```
