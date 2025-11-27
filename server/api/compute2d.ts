@@ -1,4 +1,4 @@
-import type { ConvexHullRequest, ConvexHullResponse } from '../../shared/dto/dto'
+import type { ConvexHullRequest, ConvexHullFullResponse } from '../../shared/dto/dto'
 
 /**
  * Handler for `/api/compute`.
@@ -12,8 +12,6 @@ import type { ConvexHullRequest, ConvexHullResponse } from '../../shared/dto/dto
  * DTO fields (from `shared/dto/dto.d.ts`):
  * - `ConvexHullRequest`:
  *   - `input: string[]` — input points encoded as strings.
- * - `ConvexHullResponse`:
- *   - `hull: string[]` — array of points (as strings) forming the convex hull.
  * - `ConvexHullFullResponse` (additional fields provided by backend when available):
  *   - `input: string[]` — original input points.
  *   - `base: string[]` — base points used by the algorithm (implementation-specific meaning).
@@ -23,7 +21,7 @@ import type { ConvexHullRequest, ConvexHullResponse } from '../../shared/dto/dto
  *   - `computationTimeMs: number` — computation time in milliseconds.
  *   - `timestamp: string` — ISO timestamp when computation completed.
  */
-export default defineEventHandler(async (event): Promise<ConvexHullResponse> => {
+export default defineEventHandler(async (event): Promise<ConvexHullFullResponse> => {
   const config = useRuntimeConfig()
 
   const body = await readBody<ConvexHullRequest>(event)
@@ -31,7 +29,7 @@ export default defineEventHandler(async (event): Promise<ConvexHullResponse> => 
     throw createError({ statusCode: 400, statusMessage: 'Request body must be { input: string[] }' })
   }
 
-  const res = await fetch(`${config.apiUrl}/api/v1/compute`, {
+  const res = await fetch(`${config.apiUrl}/api/v1/convexhull/2d/compute/full`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
@@ -44,12 +42,18 @@ export default defineEventHandler(async (event): Promise<ConvexHullResponse> => 
 
   const data = await res.json()
 
-  const hull = (data as Partial<ConvexHullResponse>)?.hull
-  if (!hull || !Array.isArray(hull)) {
-    throw createError({ statusCode: 502, statusMessage: 'Invalid response from backend: missing hull array' })
+  const fullResponse = data as Partial<ConvexHullFullResponse>
+  if (
+    !fullResponse.hull || !Array.isArray(fullResponse.hull)
+    || !fullResponse.input || !Array.isArray(fullResponse.input)
+    || !fullResponse.base || !Array.isArray(fullResponse.base)
+    || !fullResponse.colinear || !Array.isArray(fullResponse.colinear)
+    || typeof fullResponse.algorithm !== 'string'
+    || typeof fullResponse.computationTimeMs !== 'number'
+    || typeof fullResponse.timestamp !== 'string'
+  ) {
+    throw createError({ statusCode: 502, statusMessage: 'Invalid response from backend: missing or invalid fields' })
   }
 
-  const rsp: ConvexHullResponse = { hull }
-
-  return rsp
+  return fullResponse as ConvexHullFullResponse
 })

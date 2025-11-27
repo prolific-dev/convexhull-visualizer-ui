@@ -27,7 +27,7 @@ const links = [
     {
       label: 'API',
       icon: 'i-lucide-code',
-      to: '/api-docs',
+      to: '/docs',
       onSelect: () => {
         open.value = false
       }
@@ -152,18 +152,22 @@ onMounted(async () => {
       v-model:open="open"
       collapsible
       resizable
-      class="bg-elevated/25 gap-6"
-      :ui="{ footer: 'lg:border-t lg:border-default' }"
+      class="bg-elevated/25"
+      :ui="{
+        header: 'pt-16 pb-10',
+        footer: 'lg:border-t lg:border-default'
+      }"
     >
       <template #header="{ collapsed }">
-        <UContainer class="pt-8 text-lg font-semibold min-h-[120px]">
+        <UContainer class="text-lg font-semibold min-h-[120px]">
           <div :class="collapsed ? 'flex flex-col items-center' : 'flex flex-col items-center whitespace-nowrap'">
             <img
               src="/img/convex_hull_transparent_bg.png"
               alt="Convex Hull Visualizer Logo"
               class="w-14 h-14"
             >
-            <p v-show="!collapsed" class="font-semibold text-sm">Convex Hull Visualizer v0.0.1 Alpha</p>
+            <p v-show="!collapsed" class="font-semibold text-sm">Convex Hull Visualizer </p>
+            <p v-show="!collapsed" class="text-xs">v0.0.1 Alpha</p>
           </div>
         </UContainer>
       </template>

@@ -29,7 +29,7 @@ export default defineEventHandler(async (event): Promise<ConvexHullFullResponse>
     throw createError({ statusCode: 400, statusMessage: 'Request body must be { input: string[] }' })
   }
 
-  const res = await fetch(`${config.apiUrl}/api/v1/convexhull/compute-full`, {
+  const res = await fetch(`${config.apiUrl}/api/v1/convexhull/3d/compute/full`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),

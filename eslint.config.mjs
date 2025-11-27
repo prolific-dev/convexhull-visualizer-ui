@@ -87,6 +87,8 @@ export default withNuxt({
         normal: 'never',
         component: 'always'
       }
-    }]
+    }],
+    'vue/prop-name-casing': ['error', 'camelCase'],
+    'vue/attribute-hyphenation': ['error', 'always']
   }
 })

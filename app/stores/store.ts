@@ -32,7 +32,7 @@ interface GraphData {
   timestamp: string
 }
 
-export const useStore = defineStore('myStore', {
+export const useStore = defineStore('convexhull-visualizer-store', {
   state: () => ({
     profileInfo: {
       name: 'James Dean',
@@ -236,7 +236,7 @@ export const useStore = defineStore('myStore', {
 
     async _computeGraphData2D(points: Set<Point2D>) {
       try {
-        const { data, error } = await useFetch('/api/compute-full', {
+        const { data, error } = await useFetch('/api/compute2d', {
           method: 'POST',
           body: {
             input: Array.from(points).map((p) => `${p.x},${p.y}`),
@@ -289,7 +289,7 @@ export const useStore = defineStore('myStore', {
 
     async _computeGraphData3D(points: Set<Point3D>) {
       try {
-        const { data, error } = await useFetch('/api/compute-full', {
+        const { data, error } = await useFetch('/api/compute3d', {
           method: 'POST',
           body: {
             input: Array.from(points).map((p) => `${p.x},${p.y},${p.z}`),
